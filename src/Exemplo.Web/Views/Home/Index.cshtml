@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles
+{
+    <link href="~/dist/css/home.css" rel="stylesheet" />
+}
+
+<div class="text-center">
+    <h2>Welcome</h2>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="alert alert-dismissible fade" role="alert" id="alert">
+    <strong id="messageType"></strong><br />
+    <span id="message"></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="card p-4 mb-4">
+
+    <form class="form-inline d-flex">
+        <input type="hidden" id="id" />
+        <div class="form-group flex-fill">
+            <input type="text" class="form-control" id="nome" placeholder="Nome">
+        </div>
+        <div class="form-group flex-fill">
+            <input type="number" class="form-control" id="cpf" placeholder="CPF">
+        </div>
+        <button type="button" class="btn btn-sm btn-success flex-fill" id="btnSalvar">Salvar</button>
+        <button type="button" class="btn btn-sm btn-primary ml-3 flex-fill" id="btnNovo">Novo</button>
+    </form>
+    
+</div>
+
+<table id="table"
+       data-toggle="table"
+       data-url="@Url.Action("BuscarDados","Home")"
+       data-side-pagination="server"
+       data-pagination="true"
+       data-query-params-type="">
+    <thead>
+        <tr>
+            <th data-field="nome">Nome</th>
+            <th data-field="cpf">Cpf</th>
+            <th data-field="id" data-formatter="app.formatter">#</th>
+        </tr>
+    </thead>
+</table>
+
+@Html.Hidden("buscar-url", Url.Action("BuscarDados", "Home"));
+@Html.Hidden("novo-url", Url.Action("NovoCliente", "Home"));
+@Html.Hidden("editar-url", Url.Action("AtualizarCliente", "Home"));
+@Html.Hidden("excluir-url", Url.Action("ExcluirCliente", "Home"));
+
+@section Scripts {
+    <script src="~/dist/js/home.js"></script>
+}
