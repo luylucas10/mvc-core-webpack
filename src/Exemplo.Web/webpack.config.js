@@ -68,5 +68,14 @@ module.exports = {
             // this makes webpack loads the development file, not the esm that can't be debugged on Chrome
             vue: "vue/dist/vue.js"
         }
-    }
+    },
+    devServer: {
+        compress: true,
+        proxy: {
+            '*': {
+                target: "http://localhost:8082"
+            }
+        },
+        port: "8081"
+    },
 };

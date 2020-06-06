@@ -3,67 +3,76 @@
 import 'bootstrap-table/dist/bootstrap-table.js';
 import 'bootstrap-table/dist/locale/bootstrap-table-pt-BR.js'
 
-import $ from "jquery";
 import axios from "axios";
+import $ from "jquery";
+import "bootstrap";
+import "jquery-validation";
+import "jquery-validation-unobtrusive";
 
 const App = (() => {
-    var buscarUrl,
-        novoUrl,
-        editarUrl,
-        excluirUrl,
+    let searchUrl,
+        createUrl,
+        editUrl,
+        deleteUrl,
         idInput,
         nomeInput,
         cpfInput,
-        btnNovo,
-        btnSalvar,
+        btnNew,
+        btnSubmit,
         table,
+        form,
         alert,
         messageType,
         message;
 
     const init = () => {
-        buscarUrl = $("#buscar-url").val();
-        novoUrl = $("#novo-url").val();
-        editarUrl = $("#editar-url").val();
-        excluirUrl = $("#excluir-url").val();
-        idInput = $("#id");
-        nomeInput = $("#nome");
-        cpfInput = $("#cpf");
-        btnSalvar = $("#btnSalvar");
-        btnNovo = $("#btnNovo");
+        searchUrl = $("#buscar-url").val();
+        createUrl = $("#novo-url").val();
+        editUrl = $("#editar-url").val();
+        deleteUrl = $("#excluir-url").val();
+        idInput = $("#Id");
+        nomeInput = $("#Nome");
+        cpfInput = $("#Cpf");
+        btnSubmit = $("#btnSalvar");
+        btnNew = $("#btnNovo");
         table = $("[data-toggle='table']");
+        form = $("#form");
         alert = $("#alert");
         messageType = $("#messageType");
         message = $("#message");
-        registrarEventos();
+        initEvents();
     };
 
-    const registrarEventos = () => {
-        btnNovo.on("click", () => {
-            idInput.val("");
-            nomeInput.val("");
-            cpfInput.val("");
-        });
+    const initEvents = () => {
+        btnNew.on("click", () => clearFields());
 
-        btnSalvar.on("click", e => {
-            const obj = { id: Number(idInput.val()), nome: nomeInput.val(), cpf: cpfInput.val() };
-            if (!obj.id)
-                axios.post(novoUrl, obj).then(response => responseChecker(response));
-            else
-                axios.put(`${editarUrl}/${obj.id}`, obj).then(response => responseChecker(response));
+        btnSubmit.on("click", e => {
+            form.validate();
+            if (form.valid()) {
+                const obj = { id: Number(idInput.val()), nome: nomeInput.val(), cpf: cpfInput.val() };
+                if (!obj.id || obj.id === 0)
+                    axios.post(createUrl, obj)
+                        .then(response => { responseChecker(response); clearFields(); })
+                        .catch(response => { console.log(response) });
+                else
+                    axios
+                        .put(`${editUrl}/${obj.id}`, obj).then(response => { responseChecker(response); clearFields(); })
+                        .catch(response => { console.log(response) });
+            }
         });
 
 
         table.on("load-success.bs.table", e => {
             $("[data-toggle='editar']").on("click", e => {
-                carregarEditar($(e.currentTarget).data("value"))
+                load($(e.currentTarget).data("value"))
             });
-            $("[data-toggle='excluir']").on("click", e => { carregaExcluir($(this).data("value")) });
+            $("[data-toggle='excluir']").on("click", e => { del($(this).data("value")) });
         });
     };
-    const carregarEditar = (id) => {
+
+    const load = (id) => {
         axios
-            .get(`${buscarUrl}/${id}`)
+            .get(`${searchUrl}/${id}`)
             .then(response => {
                 idInput.val(id);
                 nomeInput.val(response.data.nome);
@@ -71,35 +80,39 @@ const App = (() => {
             });
     };
 
-    const carregarExcluir = (id) => {
+    const del = (id) => {
         console.log("Excluindo")
     };
 
-    const formatter = (value, row, index) => {
-        return `
-                <button class="btn btn-sm btn-warning" type="button" data-toggle="editar" data-value="${value}">Editar</button>
-                <button class="btn btn-sm btn-danger" type="button" data-toggle="excluir" data-value="${value}">Excluir</button>`;
-    };
+    const clearFields = () => {
+        idInput.val("");
+        nomeInput.val("");
+        cpfInput.val("");
+        form.validate().resetForm();
+    }
 
     const responseChecker = (response) => {
         if (response.data.success === true) {
             messageType.html("Success");
             message.html(response.data.message)
-            $("#alert").removeClass("alert-danger").addClass("alert-success show");
+            alert.removeClass("alert-danger").addClass("alert-success show");
             table.bootstrapTable("refresh");
         } else {
-            var error = showErrors(response.data.message);
+            let error = showErrors(response.data.message);
             messageType.html("Erro");
             message.html(error);
-            $("#alert").removeClass("alert-success").addClass("alert-danger show");
+            alert.removeClass("alert-success").addClass("alert-danger show");
         }
+
+        setTimeout(() => alert.removeClass("show"), 3000);
     }
+
     const showErrors = (modelState) => {
-        var message = "";
-        var propStrings = Object.keys(modelState);
+        let message = "";
+        let propStrings = Object.keys(modelState);
 
         $.each(propStrings, function (i, propString) {
-            var propErrors = modelState[propString].errors;
+            let propErrors = modelState[propString].errors;
             $.each(propErrors, function (j, propError) {
                 message += `<b>${propString}</b>: ${propError.errorMessage}<br/>`;
             });
@@ -107,6 +120,12 @@ const App = (() => {
         });
 
         return message;
+    };
+
+    const formatter = (value, row, index) => {
+        return `
+                <button class="btn btn-sm btn-warning" type="button" data-toggle="editar" data-value="${value}">Editar</button>
+                <button class="btn btn-sm btn-danger" type="button" data-toggle="excluir" data-value="${value}">Excluir</button>`;
     };
 
     return { init, formatter }

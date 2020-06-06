@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Exemplo.Web.Models;
 
+
 namespace Exemplo.Web
 {
     public class Startup
@@ -20,7 +21,6 @@ namespace Exemplo.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddMvc().AddRazorRuntimeCompilation();
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<ExemploDbContext>(options =>
@@ -34,6 +34,9 @@ namespace Exemplo.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions() { 
+                //    HotModuleReplacement = true
+                //});
             }
             else
             {

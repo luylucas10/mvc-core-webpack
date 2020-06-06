@@ -1,5 +1,5 @@
 ﻿import "../scss/index.scss";
 
-import $ from "jquery";
+import "jquery";
 import "popper.js";
 import "bootstrap";

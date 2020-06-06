@@ -1,3 +1,16 @@
 ﻿@import url("https://use.fontawesome.com/releases/v5.6.3/css/all.css");
 @import "~bootstrap-table/dist/bootstrap-table.css";
 
+.valid {
+    border: 1px solid;
+    border-color: lightgreen
+}
+
+.input-validation-error {
+    border: 1px solid;
+    border-color: indianred
+}
+
+h2{
+    color:orange;
+}
