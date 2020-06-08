@@ -2,7 +2,7 @@
 
 The goal of this project is build an example of how to integrate **[Webpack](https://webpack.js.org/)** with **[ASP.NET Core MVC](https://docs.microsoft.com/pt-br/aspnet/core/mvc/overview?view=aspnetcore-3.1)**. This project has configuration for: build sass, transpile es6 to es5, HMR for update front-end files while debugging, development and production builds too. 
 
-For now, It has just a CRUD example with [Bootstrap 4](https://getbootstrap.com/) and [jQuery](https://jquery.com/) frameworks, using some [es6 updates](http://es6-features.org/).
+For now, It is just a CRUD example with [Bootstrap 4](https://getbootstrap.com/) and [jQuery](https://jquery.com/) frameworks, using some [es6 updates](http://es6-features.org/).
 
 The next goal is build an example with [Bulma](https://bulma.io/) and [Vue.js](https://vuejs.org/)
 
