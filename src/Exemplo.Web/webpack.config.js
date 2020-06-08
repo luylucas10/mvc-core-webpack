@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCssAssestsPlugin = require("optimize-css-assets-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
@@ -11,6 +11,8 @@ const entries = {
     index: "./wwwroot/src/js/index.js"
 };
 
+// create a entry for all index.js file at js directory inside wwwroot/src/js
+// that way, we create multiples 
 fs.readdirSync(srcPath).forEach((name) => {
     const indexFile = `${srcPath}/${name}/index.js`;
     if (fs.existsSync(indexFile)) {
@@ -19,27 +21,36 @@ fs.readdirSync(srcPath).forEach((name) => {
 });
 
 module.exports = {
-    mode: "development", // The mode of configuration
-    entry: entries, // Our entry object that contains all entries founded
+    mode: process.env.NODE_ENV,
+
+    entry: entries,
+
     output: {
         path: path.resolve(__dirname, "./wwwroot/dist"),
         filename: "js/[name].js",
         publicPath: "/dist/",
     },
+
     optimization: {
         minimizer: [
-            new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: true }),
+            new TerserPlugin({
+                cache: true,
+                parallel: true,
+                terserOptions: { ecma: 6 }
+            }),
             new OptimizeCssAssestsPlugin()
         ]
     },
+
     plugins: [
-        new MiniCssExtractPlugin({ filename: "css/[name].css" }), //this will extract all css to this file
-        new CopyWebpackPlugin({ patterns: [{ from: 'wwwroot/src/img', to: 'img' }] }), //copiar imagens
+        new MiniCssExtractPlugin({ filename: "css/[name].css" }), //this will extract css files imported in js files
+        new CopyWebpackPlugin({ patterns: [{ from: 'wwwroot/src/img', to: 'img' }] }), // copy images
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
         })
     ],
+
     module: {
         rules: [
             {
@@ -53,22 +64,24 @@ module.exports = {
                 exclude: /(node_modules)/,
                 use: { loader: "babel-loader", options: { presets: ["@babel/preset-env"] } }
             },
-            //{
-            //    test: /\.(jpe?g|png|gif|svg)$/,
-            //    loaders: ["file-loader"]
-            //},
+            {
+                test: /\.(jpe?g|png|gif|svg)$/,
+                loaders: ["file-loader"]
+            },
             //{
             //    test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
             //    use: [{ loader: "file-loader", options: { name: "[name].[ext]", outputPath: "fonts/" } }]
             //}
         ]
     },
+
     resolve: {
         alias: {
             // this makes webpack loads the development file, not the esm that can't be debugged on Chrome
             vue: "vue/dist/vue.js"
         }
     },
+
     devServer: {
         compress: true,
         proxy: {
@@ -77,5 +90,5 @@ module.exports = {
             }
         },
         port: "8081"
-    },
+    }
 };

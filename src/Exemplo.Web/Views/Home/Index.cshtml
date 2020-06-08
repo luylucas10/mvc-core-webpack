@@ -9,8 +9,8 @@
 }
 
 <div class="text-center">
-    <h2>Welcome</h2>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h2>jQuery</h2>
+    <p>Isso é um exemplo de CRUD usando jQuery</p>
 </div>
 
 <div class="card">
@@ -41,18 +41,17 @@
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-end">
-                    <button type="button" class="btn btn-sm btn-success mr-3" id="btnSalvar">Salvar</button>
-                    <button type="button" class="btn btn-sm btn-primary" id="btnNovo">Novo</button>
+                    <button type="button" class="btn btn-sm btn-success mr-3" id="btnSubmit">Salvar</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="btnNew">Novo</button>
                 </div>
             </div>
-
         </form>
     </div>
 </div>
 
 <table id="table" class="mt-4"
        data-toggle="table"
-       data-url="@Url.Action("BuscarDados","Home")"
+       data-url="@Url.Action("Get","Home")"
        data-side-pagination="server"
        data-pagination="true"
        data-query-params-type="">
@@ -65,10 +64,30 @@
     </thead>
 </table>
 
-@Html.Hidden("buscar-url", Url.Action("BuscarDados", "Home"));
-@Html.Hidden("novo-url", Url.Action("NovoCliente", "Home"));
-@Html.Hidden("editar-url", Url.Action("AtualizarCliente", "Home"));
-@Html.Hidden("excluir-url", Url.Action("ExcluirCliente", "Home"));
+<div class="modal" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir o item?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btnModalConfirm">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Hidden("search-url", Url.Action("Get", "Home"))
+@Html.Hidden("post-url", Url.Action("Post", "Home"))
+@Html.Hidden("put-url", Url.Action("Put", "Home"))
+@Html.Hidden("delete-url", Url.Action("Delete", "Home"))
 
 @section Scripts {
     <script src="~/dist/js/home.js"></script>

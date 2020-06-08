@@ -1,11 +1,11 @@
 {
   "name": "mvc-core-webpack",
   "version": "1.0.0",
-  "description": "Esse projeto tem como objetivo exibir como podemos utilizar o Webpack para fazer build do front-end de um projeto web",
+  "description": "This project has the purpose shows how to use Webpack with asp.net mvc core project",
   "private": true,
   "scripts": {
-    "build": "webpack",
-    "build:hot": "webpack-dev-server --hot --inline"
+    "build:dev": "cross-env NODE_ENV=development webpack-dev-server --hot --inline",
+    "build:prod": "cross-env NODE_ENV=production webpack"
   },
   "author": "luylucas10",
   "license": "GPL3",
@@ -24,13 +24,14 @@
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
     "copy-webpack-plugin": "^6.0.2",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.5.3",
     "file-loader": "^6.0.0",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.14.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "sass-loader": "^8.0.2",
-    "uglifyjs-webpack-plugin": "^2.2.0",
+    "terser-webpack-plugin": "^3.0.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-middleware": "^3.7.2",
@@ -38,7 +39,7 @@
   },
   "-vs-binding": {
     "ProjectOpened": [
-      "build:hot"
+      "build:dev"
     ]
   }
 }

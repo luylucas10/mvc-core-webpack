@@ -38,7 +38,7 @@ namespace Exemplo.Web.Controllers
         }
 
 
-        public async Task<IActionResult> BuscarDados(string searchText, string sortOrder, int pageNumber, int pageSize, int? id)
+        public async Task<IActionResult> Get(string searchText, string sortOrder, int pageNumber, int pageSize, int? id)
         {
             if (id.HasValue)
             {
@@ -62,8 +62,7 @@ namespace Exemplo.Web.Controllers
             return Ok(new { rows, total });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> NovoCliente([FromBody]ClienteViewModel model)
+        public async Task<IActionResult> Post([FromBody]ClienteViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -75,8 +74,7 @@ namespace Exemplo.Web.Controllers
             return Ok(new { success = false, message = ModelState });
         }
 
-        [HttpPut]
-        public async Task<IActionResult> AtualizarCliente([FromQuery]int? id, [FromBody]ClienteViewModel model)
+        public async Task<IActionResult> Put([FromQuery]int? id, [FromBody]ClienteViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -90,14 +88,20 @@ namespace Exemplo.Web.Controllers
             return Ok(new { success = false, message = ModelState });
         }
 
+        [Consumes("application/json")]
         [HttpDelete]
-        public async Task<IActionResult> ExcluirCliente([FromBody]int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var cliente = await _dbContext.Cliente.FindAsync(id);
-            _dbContext.Remove(cliente);
-            await _dbContext.SaveChangesAsync();
+            if (cliente != null)
+            {
+                _dbContext.Remove(cliente);
+                await _dbContext.SaveChangesAsync();
 
-            return Ok(new { success = true, message = "Excluído com sucesso" });
+                return Ok(new { success = true, message = "Excluído com sucesso" });
+            }
+
+            return Ok(new { success = false, message = "Nenhum objeto encontrado" });
         }
 
 

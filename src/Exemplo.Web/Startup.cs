@@ -21,6 +21,7 @@ namespace Exemplo.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Compilação do razor em tempo de execução
             services.AddMvc().AddRazorRuntimeCompilation();
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<ExemploDbContext>(options =>
@@ -34,14 +35,12 @@ namespace Exemplo.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions() { 
-                //    HotModuleReplacement = true
-                //});
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
             app.UseStaticFiles();
 
             app.UseRouting();
