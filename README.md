@@ -9,16 +9,18 @@ The roadmap:
 - [x] Make a simple crud API;
 - [x] Create a front-end with BS4 and jQuery;
 - [x] Create a no SPA front-end with Vue.js and Bulma;
-- [ ] Create a no SPA  front-end with Angular and MaterializeCSS;
-- [ ] Create a no SPA front-end with React and MaterialUI;
-- [ ] Apply Typescript to Vue, Angular and React code;
-- [ ] Create an SPA for Vue;
-- [ ] Create an SPA for Angular;
-- [ ] Create an SPA for React;
-- [ ] Add asp.net identity core;
+- [ ] Add asp.net identity core and test authentication and authorization;
+- [ ] ~~Create a no SPA  front-end with Angular and MaterializeCSS;~~ It is not possible to use like Vue or jQuery;
+- [ ] ~~Create a no SPA front-end with React and MaterialUI;~~ It is not possible to use like Vue or jQuery
+- [ ] ~~Apply Typescript to Vue, Angular and React code;~~
+- [ ] Create an SPA with Vue;
+- [ ] Create an SPA with Angular;
+- [ ] Create an SPA with React;
 - [ ] and more...
 
 To run this project, you'll need:
  - VS 2019 | NPM/Webpack Task Runner;
  - Node (I'm using 14.4.0);
  - SQL Server (or another database, but you'll need to configure EF configs and recreate migrations);
+
+
