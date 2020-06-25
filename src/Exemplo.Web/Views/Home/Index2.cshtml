@@ -1,10 +1,155 @@
-﻿<link href="~/dist/css/home2.css" rel="stylesheet" />
+﻿@model ClienteViewModel
 @{
     ViewData["Title"] = "Index2";
+    Layout = null;
 }
 
-<h2>Index2</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vue.js + Bulma.css</title>
+    <link href="~/dist/css/home2.css" rel="stylesheet" />
 
-@section Scripts {
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="@Url.Action("Index","Home")">
+                <h3>Exemplo</h3>
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="@Url.Action("Index","Home")">
+                    BS4 + jQuery
+                </a>
+
+                <a class="navbar-item" href="@Url.Action("Index2","Home")">
+                    Bulma + Vue.js
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="app">
+        <div class="section">
+            <section class="hero">
+                <div class="hero-body">
+                    <div class="container has-text-centered">
+                        <h1 class="title">
+                            Vue.Js
+                        </h1>
+                        <h2 class="subtitle">
+                            Isso é um exemplo de CRUD usando Vue.js sem SPA
+                        </h2>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="notification" v-bind:class="{ 'is-hidden' : !showMessage, 'is-success': success, 'is-danger': !success}">
+                    <button class="delete" v-on:click="closeNotification"></button>
+                    <span><strong>{{ messageTitle }}</strong></span><br />
+                    <span>{{ message }}</span>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Nome</label>
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Nome" v-model="nome">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">CPF</label>
+                            <div class="control">
+                                <input class="input" type="number" placeholder="CPF" v-model="cpf">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                        <button class="button is-success" type="button" v-on:click="save">Salvar</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-primary" type="button" v-on:click="clearFields">Novo</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <table class="table is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="row in rows">
+                            <td>{{row.nome}}</td>
+                            <td>{{row.cpf}}</td>
+                            <td>
+                                <button class="button is-warning" type="button" v-on:click="load(row.id)">Editar</button>
+                                <button class="button is-danger" type="button" v-on:click="del(row.id)">Excluir</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <nav class="pagination" role="navigation" aria-label="pagination">
+                    <a class="pagination-previous" v-on:click="previousPage" :disabled="page===1">Previous</a>
+                    <a class="pagination-next" v-on:click="nextPage" :disabled="page === (total/pageSize)">Next page</a>
+                </nav>
+            </div>
+        </div>
+        <div class="modal" v-bind:class="{'is-active': openModal}">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Confirmação</p>
+                    <button class="delete" aria-label="close" v-on:click="cancelDelete"></button>
+                </header>
+                <section class="modal-card-body has-text-centered">
+                    <p>Tem certeza que deseja realizar essa ação?</p>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-danger" type="button" v-on:click="confirmDelete">Confirmar</button>
+                    <button class="button" type="button" v-on:click="cancelDelete">Cancel</button>
+                </footer>
+            </div>
+        </div>
+
+        @Html.Hidden("search-url", Url.Action("Get", "Home"))
+        @Html.Hidden("post-url", Url.Action("Post", "Home"))
+        @Html.Hidden("put-url", Url.Action("Put", "Home"))
+        @Html.Hidden("delete-url", Url.Action("Delete", "Home"))
+    </div>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>Vue.js with Bulma.css Example</strong> by <a href="https://github.com/luylucas10">Luy Lucas</a>.
+            </p>
+        </div>
+    </footer>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="~/dist/js/home2.js"></script>
-}
+</body>
+</html>
+

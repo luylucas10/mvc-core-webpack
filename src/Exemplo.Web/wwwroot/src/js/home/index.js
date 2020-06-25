@@ -123,7 +123,7 @@ const App = ((j) => {
     }
 
     const load = (id) => {
-        showLoading();
+        //showLoading();
         axios
             .get(`${searchUrl}/${id}`)
             .then(response => {
