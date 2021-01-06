@@ -10,7 +10,7 @@
   "author": "luylucas10",
   "license": "GPL3",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.0",
     "bootstrap-table": "^1.16.0",
     "bulma": "^0.9.0",
