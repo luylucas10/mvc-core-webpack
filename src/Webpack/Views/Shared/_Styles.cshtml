@@ -1,0 +1,13 @@
+@model string
+@if (Model is not null)
+{
+	var css = LoadWebpack.LoadCss(Model);
+	if (css?.Item2 is not null)
+	{
+		<link rel="stylesheet" href="~/dist/@css.Item1" integrity="@css.Item2" crossorigin="anonymous">
+	}
+	else if (css?.Item1 is not null)
+	{
+		<link rel="stylesheet" href="~/dist/@css.Item1">
+	}
+}

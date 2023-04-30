@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="webpack.common.js" />
+    <None Remove="webpack.dev.js" />
+    <None Remove="webpack.prd.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="webpack.prd.js" />
+    <Content Include="webpack.dev.js" />
+    <Content Include="webpack.common.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\src\img\" />
+  </ItemGroup>
+
+</Project>

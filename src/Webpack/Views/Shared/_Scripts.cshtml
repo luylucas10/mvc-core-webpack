@@ -1,0 +1,13 @@
+@model string
+@if (Model is not null)
+{
+	var js = LoadWebpack.LoadJs(Model);
+	if (js?.Item2 is not null)
+	{
+		<script src="~/dist/@js.Item1" crossorigin="anonymous" integrity="@js.Item2"></script>
+	}
+	else if(js?.Item1 is not null)
+	{
+		<script src="~/dist/@js?.Item1"></script>
+	}
+}

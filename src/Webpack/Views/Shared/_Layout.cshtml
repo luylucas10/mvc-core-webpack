@@ -1,0 +1,37 @@
+﻿<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="auto">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>@ViewData["Title"] - Webpack</title>
+	@await Html.PartialAsync("_Styles", "index")
+	@await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="d-flex h-100 text-center text-bg-dark">
+	<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+		<header class="mb-auto">
+			<div>
+				<h3 class="float-md-start mb-0">Cover</h3>
+				<nav class="nav nav-masthead justify-content-center float-md-end">
+					<a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="#">Home</a>
+					<a class="nav-link fw-bold py-1 px-0" href="#">Features</a>
+					<a class="nav-link fw-bold py-1 px-0" href="#">Contact</a>
+				</nav>
+			</div>
+		</header>
+
+		@RenderBody()
+
+		<footer class="mt-auto text-white-50">
+			<p>
+				Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@@mdo</a>.
+			</p>
+		</footer>
+	</div>
+
+	@await Html.PartialAsync("_Scripts", "runtime")
+	@await Html.PartialAsync("_Scripts", "vendors")
+	@await Html.PartialAsync("_Scripts", "index")
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

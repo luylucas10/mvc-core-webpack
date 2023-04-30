@@ -1,0 +1,26 @@
+{
+  "home.js": {
+    "src": "js/home.04a3ccbe2aef77c3df5c.js",
+    "integrity": "sha256-1Dz5TMs2cWsCoYTUTWDkB8zv4GfA8DK1Gu83eLHZgT8="
+  },
+  "img/Vue.js_Logo_2.svg.png": {
+    "src": "img/Vue.js_Logo_2.svg.png",
+    "integrity": "sha256-ivG+Eg5auYwJzVB/tuSHgqNUG6D4AWXb05DKfCwLOrM="
+  },
+  "index.css": {
+    "src": "css/index.c46a6d9b937652befd99.css",
+    "integrity": "sha256-Cda1M6aHYHT1HBZF3HptE4SfryOuGLMlglUAXQ8Na9Y="
+  },
+  "index.js": {
+    "src": "js/index.c46a6d9b937652befd99.js",
+    "integrity": "sha256-QegaEDJqjFXirfPUwcujI52LcN/bUdAamNlChLkvEt8="
+  },
+  "runtime.js": {
+    "src": "js/runtime.c5560a866f3209d12553.js",
+    "integrity": "sha256-197wAN7j16P2tKMJxvvMBc3JjMgq9n+iohYWueeL3hs="
+  },
+  "vendors.js": {
+    "src": "js/vendors.3aeaca22b19a5cce4577.js",
+    "integrity": "sha256-OVrSv+O7/OxoDxNqLqp/dCvhxorjnp3zHC6v6GKGntg="
+  }
+}
